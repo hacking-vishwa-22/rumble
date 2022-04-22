@@ -57,3 +57,30 @@ a{
   font-weight: bold;
   color: #370665;
 }
+
+
+/*Journal*/
+
+.journal-style {
+text-align: center;
+}
+
+.journalBody{
+  font-size: 2rem;
+  width: 45%;
+  margin: 10% auto 10% auto;
+}
+
+.journalLink {
+  color: #363062;
+  text-decoration: none;
+  font-size: 2rem;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
+.journalDiv {
+  background-color: #D9D7F1;
+}
