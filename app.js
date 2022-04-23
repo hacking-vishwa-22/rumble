@@ -139,6 +139,19 @@ request.end();
 });
 
 
+app.get("/about",function(err){
+  if(!err){
+    res.render("about");
+  }
+});
+
+app.get("/contact",function(err){
+  if(!err){
+    res.render("contact");
+  }
+});
+
+
 app.post("/failure",function(req,res){
   res.redirect("/");
 });
