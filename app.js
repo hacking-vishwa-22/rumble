@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require("lodash");
 const mongoose = require("mongoose");
+const https = require("https");
+const request = require("request");
 
 
 mongoose.connect('mongodb+srv://admin-angela:Test123@cluster0.nbxhk.mongodb.net/journalDB', {
@@ -89,6 +91,59 @@ app.get("/posts/:postName", function(req, res) {
     }
   });
 });
+
+
+
+app.post("/",function(req, res){
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const emailAdd = req.body.emailadd;
+  // console.log(firstName);
+  // console.log(lastName);
+  // console.log(emailadd);
+  const data = {
+    members: [
+      {
+      email_address: emailAdd,
+      status: "subscribed",
+      merge_fields: {
+        FNAME: firstName,
+        LNAME: lastName
+      }
+    }
+  ]
+};
+const jsonData = JSON.stringify(data);
+
+const url = "https://us14.api.mailchimp.com/3.0/lists/2c29f8e965";
+
+const options = {
+  method: "POST",
+  auth: "isha:4d375bb10dd204cfa84785b3f229fd3d-us14"
+};
+
+const request = https.request(url, options, function(response){
+
+  if(response.statusCode === 200){
+    res.sendFile(__dirname+"/success.html");
+  }
+  else{
+    res.sendFile(__dirname+"/failure.html");
+  }
+  response.on("data", function(data){
+    console.log(JSON.parse(data));
+  });
+});
+request.write(jsonData);
+request.end();
+});
+
+
+app.post("/failure",function(req,res){
+  res.redirect("/");
+});
+
+
 
 
 let port = process.env.PORT;
